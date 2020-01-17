@@ -4,21 +4,48 @@
 #include <RequestProgramParser.h>
 #include <QStringList>
 
+#include <QStandardPaths>
+#include <QString>
+#include <QTextStream>
+
 #include <QDebug>
+
+const QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/test.json";
+
+void printInstruction()
+{
+    qDebug() << "Enter mode number and path to file in format: modeNumber pathToFile " << endl
+             << "(for example: 1  ~/Desktop)" << endl
+             << "Modes: 0 - create new empty json file" << endl
+             << "1 - convert exist file to binary and send" << endl
+             << "second argument is path to file, if it's empty, program will use standart path: ~/Desktop";
+}
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-//    qDebug() << argc << argv[0] << argv[1];
-//    JsonProgramCreator creator;
-    if (argc == 2)
+    auto args = QCoreApplication::arguments();
+
+    if (argc == 2 or argc == 3)
     {
-        auto args = QCoreApplication::arguments();
-        RequestProgramParser(args.at(1));
+        QString path;
+        if (argc == 3)
+            path = args.at(2);
+        else
+            path = defaultPath;
+
+        if (args.at(1) == "0")
+        {
+            JsonProgramCreator::createEmptyJsonRequestProgram(path);
+        }
+        else if (args.at(1) == "1")
+        {
+            RequestProgramParser parser(path);
+        }
+        else
+            printInstruction();
     }
-    else
-        qDebug() << "Error, enter path to file";
 
     return a.exec();
 }

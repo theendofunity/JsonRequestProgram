@@ -5,15 +5,17 @@
 
 class QJsonObject;
 class QJsonArray;
+class QString;
 
 class JsonProgramCreator
 {
 public:
     JsonProgramCreator();
+    static void createEmptyJsonRequestProgram(QString pathToFile);
 
 private:
-    QJsonObject createCell(uint32_t id);
-    QJsonArray createRequestPeriod();
+    static QJsonObject createCell(uint32_t id);
+    static QJsonArray createRequestPeriod();
 };
 
 #endif // JSONPROGRAMCREATOR_H

@@ -16,6 +16,8 @@ RequestProgramParser::RequestProgramParser(QString pathToJson)
 
 void RequestProgramParser::readFile(QString pathToJson)
 {
+    qDebug() << "Reading file from path" << pathToJson;
+
     QFile file(pathToJson);
 
     if (!file.open(QIODevice::ReadOnly)) {
@@ -32,6 +34,8 @@ void RequestProgramParser::readFile(QString pathToJson)
 
 void RequestProgramParser::parse(QJsonObject obj)
 {
+    qDebug() << "Parsing file";
+
     QJsonObject cell;
 
     for (uint64_t i = 0; i < 1; i++)

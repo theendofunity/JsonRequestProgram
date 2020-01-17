@@ -11,7 +11,13 @@
 #include <QDebug>
 
 JsonProgramCreator::JsonProgramCreator()
+{   
+}
+
+void JsonProgramCreator::createEmptyJsonRequestProgram(QString pathToFile)
 {
+    qDebug() << "Creating file from path " << pathToFile;
+
     QJsonObject requestProgram;
 
     for (uint64_t i = 0; i < 2; i++)    //будет 2^14 в конечном варианте
@@ -20,9 +26,7 @@ JsonProgramCreator::JsonProgramCreator()
         requestProgram[name] = createRequestPeriod();   // 1 запросный период, 16 ячеек
     }
 
-
-    QFile saveFile(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)
-                   + "/test.json");
+    QFile saveFile(pathToFile);
 
     if (!saveFile.open(QIODevice::WriteOnly))
     {
