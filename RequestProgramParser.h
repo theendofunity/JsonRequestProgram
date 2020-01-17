@@ -16,6 +16,7 @@ public:
 private:
     void readFile(QString pathToJson);
     void parse(QJsonObject obj);
+    void formatCell(QJsonArray &array);
     QByteArray arrayToBinary(QJsonArray array);
 };
 

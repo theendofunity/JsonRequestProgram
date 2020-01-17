@@ -16,7 +16,7 @@ JsonProgramCreator::JsonProgramCreator()
 
 void JsonProgramCreator::createEmptyJsonRequestProgram(QString pathToFile)
 {
-    qDebug() << "Creating file from path " << pathToFile;
+    qDebug() << "Creating file from path" << pathToFile;
 
     QJsonObject requestProgram;
 
@@ -43,10 +43,12 @@ QJsonObject JsonProgramCreator::createCell(uint32_t id)
 {
     QJsonObject cell;
 
-    cell["id"] = QJsonValue::fromVariant(id);
-    cell["timeToNext"] = QJsonValue::fromVariant("");
-    cell["hasNext"] = QJsonValue::fromVariant("");
+    cell["id"] = QJsonValue::fromVariant(id).toDouble();
+    cell["timeToNext"] = QJsonValue::fromVariant(1);
+    cell["hasNext"] = QJsonValue::fromVariant(1);
     cell["reserve"] = QJsonValue::fromVariant("");
+    cell["type"] = QJsonValue::fromVariant(1);
+    cell["message"] = QJsonValue::fromVariant("00000000");
 
     return cell;
 
