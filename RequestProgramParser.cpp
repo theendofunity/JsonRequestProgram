@@ -8,7 +8,10 @@
 
 #include <QByteArray>
 #include <QBitArray>
+#include <QString>
 #include <QDebug>
+
+#include "FpgaTypes.h"
 
 RequestProgramParser::RequestProgramParser(QString pathToJson)
 {
@@ -58,37 +61,38 @@ void RequestProgramParser::formatCell(QJsonArray &array)
     {
         auto cell = item.toObject();
         QByteArray bytes;
-
+        QString result;
+// TODO переделать под правильный размер
         if (cell.contains("id"))
         {
-            auto id = cell["id"].toDouble();
-            bytes.insert(0, QString::number(id)); //4 байта
+            auto id = cell["id"].toString().rightJustified(4, '0');
+            result.insert(0, id.rightJustified(4, '0')); //4 байта
         }
         if (cell.contains("timeToNext"))
         {
-            auto ttn = cell["timeToNext"].toDouble();
-            bytes.insert(4, QString::number(ttn)); //4 байта
+            auto ttn = cell["timeToNext"].toString();
+            result.append(ttn.rightJustified(4, '0')); //4 байта
         }
 
         //Резерв
-        bytes.insert(9, QString::number(0)); //1 байт
+        result.append(QString('0'));//1 байт
 
         if (cell.contains("type"))
         {
-            auto type = cell["type"].toDouble();
-            bytes.insert(10, QString::number(type)); //1 байт
+            auto type = cell["type"].toString();    //1 байт
+            result.append(type);
         }
         if (cell.contains("message"))
         {
             auto message = cell["message"].toString(); //14 байт
-            bytes.insert(11, message);
+            result.append(message.rightJustified(14, '0'));
         }
 
-        bytes.resize(32);
+        result = result.leftJustified(32, '0'); //выравнивание до 32 байт (256 бит)
+
+        convertToDriverPresentation(result);
     }
 }
-
-
 
 
 QByteArray RequestProgramParser::arrayToBinary(QJsonArray array)
@@ -100,4 +104,17 @@ QByteArray RequestProgramParser::arrayToBinary(QJsonArray array)
 
     return bytes;
 
+}
+
+void RequestProgramParser::convertToDriverPresentation(QString &data)
+{
+    Cell cell;
+    uint8_t index = 0;
+
+    while (!data.isEmpty())
+    {
+        cell[index] = static_cast<uint8_t>(data.mid(0, 1).toUInt());
+        data.remove(0, 1);
+        index++;
+    }
 }

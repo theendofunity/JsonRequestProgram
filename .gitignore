@@ -15,8 +15,7 @@
 *_pch.h.cpp
 *_resource.rc
 *.qm
-.#*
-*.*#
+
 core
 !core/
 tags

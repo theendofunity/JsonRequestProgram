@@ -18,6 +18,8 @@ private:
     void parse(QJsonObject obj);
     void formatCell(QJsonArray &array);
     QByteArray arrayToBinary(QJsonArray array);
+
+    void convertToDriverPresentation(QString &data);
 };
 
 #endif // REQUESTPROGRAMPARSER_H

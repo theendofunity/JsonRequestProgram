@@ -2,6 +2,9 @@
 
 #include <JsonProgramCreator.h>
 #include <RequestProgramParser.h>
+
+#include <FpgaSsrAppDriver.h>
+
 #include <QStringList>
 
 #include <QStandardPaths>
@@ -42,6 +45,9 @@ int main(int argc, char *argv[])
         else if (args.at(1) == "1")
         {
             RequestProgramParser parser(path);
+
+            auto appDriver = makeDriver("");
+            appDriver->requestScheldule();
         }
         else
             printInstruction();

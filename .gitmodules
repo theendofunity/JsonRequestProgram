@@ -1,0 +1,3 @@
+[submodule "libs/FpgaSsrAppDriver"]
+	path = libs/FpgaSsrAppDriver
+	url = git@gitlab.tomsk.lemz.ru:lira-a10r/FpgaSsrAppDriver.git

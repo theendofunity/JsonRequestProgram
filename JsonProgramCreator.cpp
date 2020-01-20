@@ -43,11 +43,11 @@ QJsonObject JsonProgramCreator::createCell(uint32_t id)
 {
     QJsonObject cell;
 
-    cell["id"] = QJsonValue::fromVariant(id).toDouble();
-    cell["timeToNext"] = QJsonValue::fromVariant(1);
-    cell["hasNext"] = QJsonValue::fromVariant(1);
+    cell["id"] = QJsonValue::fromVariant(QString::number(id));
+    cell["timeToNext"] = QJsonValue::fromVariant(QString::number(1));
+    cell["hasNext"] = QJsonValue::fromVariant(QString::number(1));
     cell["reserve"] = QJsonValue::fromVariant("");
-    cell["type"] = QJsonValue::fromVariant(1);
+    cell["type"] = QJsonValue::fromVariant(QString::number(1));
     cell["message"] = QJsonValue::fromVariant("00000000");
 
     return cell;
